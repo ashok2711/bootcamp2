@@ -18,14 +18,21 @@ public class Length {
         Length length = (Length) o;
         Unit unit = Unit.valueOf(length.getUnit().name());
 
-        double parameterObjectCentimeters = unit.getCentimeters();
-        double parameterObjectLengthInCms = length.getMagnitude() * parameterObjectCentimeters;
-
-        double thisObjectCentimeters = this.unit.getCentimeters();
-        double thisObjectLengthInCms = this.getMagnitude() * thisObjectCentimeters;
+        double parameterObjectLengthInCms = this.getCentimetersBasedOnUnit(length);
+        double thisObjectLengthInCms = this.getCentimetersBasedOnUnit(this);
 
         if (this == o) return true;
         return thisObjectLengthInCms == parameterObjectLengthInCms && Objects.equals(unit, length.unit);
+    }
+
+    private double getCentimetersBasedOnUnit(Length length) {
+        double parameterObjectCentimeters = length.getUnit().getCentimeters();
+        return length.getMagnitude() * parameterObjectCentimeters;
+    }
+
+    private double getMetersBasedOnUnit(Length length) {
+        double parameterObjectCentimeters = length.getUnit().getCentimeters();
+        return length.getMagnitude() / parameterObjectCentimeters;
     }
 
     @Override
@@ -45,4 +52,14 @@ public class Length {
         return unit;
     }
 
+    public Length addLength(Length length) {
+
+        double parameterObjectLengthInCms = this.getCentimetersBasedOnUnit(length);
+        double thisObjectLengthInCms = this.getCentimetersBasedOnUnit(this);
+
+        double totalLengthInCentimeters = parameterObjectLengthInCms + thisObjectLengthInCms;
+        Length resultInMeters= new Length(totalLengthInCentimeters, Unit.M);
+
+        return new Length(this.getMetersBasedOnUnit(resultInMeters), Unit.M);
+    }
 }

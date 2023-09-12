@@ -66,4 +66,14 @@ public class LengthTest {
         assertEquals(expectedResult, result);
     }
 
+    @Test
+    void shouldReturnOutputInMetersWhenPerformingAddition(){
+        final Length oneMeterObject = new Length(1, Unit.M);
+        final Length hundredCmObject = new Length(100, Unit.CM);
+        final Length expectedResults = new Length(2, Unit.M);
+
+        Length lengthInMeters =  oneMeterObject.addLength(hundredCmObject);
+        assertEquals(expectedResults, lengthInMeters);
+    }
+
 }
