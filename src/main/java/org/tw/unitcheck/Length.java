@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Length {
 
     private final double magnitude;
-    private Unit unit;
+    private final Unit unit;
 
     public Length(double magnitude, Unit unit) {
         this.magnitude = magnitude;
